@@ -57,13 +57,6 @@ async function getExistingUrls(sheets, SHEET_ID, SHEET_RANGE) {
 
 // Write data to Google Sheets
 async function writeToSheet(sheets, SHEET_ID, SHEET_RANGE, data) {
-    // Create SHA digest for unique identification
-    const dataString = JSON.stringify({
-        url: data.source_url,
-        title: data.titel,
-        date: data.publiziert_datum
-    });
-    const sha_digest = crypto.createHash('sha256').update(dataString).digest('hex').substring(0, 12);
 
     // Map data to sheet columns (published_at is first column now)
     const row = [
