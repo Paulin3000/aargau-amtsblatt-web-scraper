@@ -2,7 +2,6 @@ require('dotenv').config();
 const { chromium } = require('playwright');
 const { parseDetailPage } = require('./parseDetailPage.js');
 const { google } = require('googleapis');
-const crypto = require('crypto');
 
 const START_URL =
     process.argv[2] ||
@@ -230,7 +229,7 @@ async function parseAndWriteDetails(page, entries, sheets, SHEET_ID, SHEET_RANGE
     let stagnation = 0;
 
     // Sammle erstmal alle Einträge
-    for (let cycle = 1; cycle <= 2; cycle++) {
+    for (let cycle = 1; cycle <= 100; cycle++) {
         const fresh = entries.slice(printed, printed + 10);
         
         if (fresh.length) {
