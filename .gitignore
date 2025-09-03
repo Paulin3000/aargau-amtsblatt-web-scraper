@@ -1,3 +1,15 @@
+# dependencies
 node_modules
-credentials.json
+package-lock.json
+
+# env / secrets
 .env
+credentials.json
+
+# logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+

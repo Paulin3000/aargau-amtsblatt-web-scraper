@@ -1,0 +1,40 @@
+name: Daily Amtsblatt Scraper
+
+on:
+  schedule:
+    - cron: "0 7 * * *" # 09:00 during CEST
+    - cron: "0 8 * * *" # 09:00 during CET
+  workflow_dispatch: {}
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: |
+          npm ci || npm i
+          npx playwright install --with-deps
+
+      - name: Write Google credentials file
+        run: |
+          echo "$GOOGLE_CREDENTIALS" > credentials.json
+        shell: bash
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Run scraper
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          SHEET_RANGE: ${{ secrets.SHEET_RANGE }}
+          GOOGLE_APPLICATION_CREDENTIALS: ./credentials.json
+        run: |
+          node scrapeAmtsblatt.js
