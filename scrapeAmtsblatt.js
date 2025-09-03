@@ -230,7 +230,7 @@ async function parseAndWriteDetails(page, entries, sheets, SHEET_ID, SHEET_RANGE
     let stagnation = 0;
 
     // Sammle erstmal alle Einträge
-    for (let cycle = 1; cycle <= 1000; cycle++) {
+    for (let cycle = 1; cycle <= 2; cycle++) {
         const fresh = entries.slice(printed, printed + 10);
         
         if (fresh.length) {
